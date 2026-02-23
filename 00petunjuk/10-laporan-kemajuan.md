@@ -6,17 +6,18 @@
 |------|--------|
 | **Project** | ONE TOUCH - Sistem Layanan Digital Terpadu |
 | **Instansi** | Balai PPMHKP Lampung — Kementerian Kelautan dan Perikanan |
-| **Tanggal Laporan** | 20 Februari 2026 |
-| **Status Project** | Development Phase - Selesai 100% Core Features |
+| **Tanggal Laporan** | 23 Februari 2026 |
+| **Status Project** | Development Phase - Selesai 100% Core Features + New Modules |
 | **Developer** | AI Development Team |
+| **Versi** | v2.0.0 |
 
 ---
 
 ## Ringkasan Kemajuan
 
-### ✅ Fitur Selesai Hari Ini
+### ✅ Fitur Selesai
 
-Project **ONE TOUCH** telah selesai dikembangkan dengan semua fitur core berfungsi penuh. Sistem ini terdiri dari dua bagian utama:
+Project **ONE TOUCH** telah selesai dikembangkan dengan semua fitur core dan modul tambahan berfungsi penuh. Sistem ini terdiri dari dua bagian utama:
 
 1. **Portal Publik** — Situs informasi yang dapat diakses tanpa login
 2. **Sistem Internal** — Aplikasi manajemen dengan 3 role user (Admin, Officer, User)
@@ -27,10 +28,11 @@ Project **ONE TOUCH** telah selesai dikembangkan dengan semua fitur core berfung
 |----------|--------|--------|
 | Halaman Publik | 8 halaman | ✅ Selesai |
 | Panel Internal | 3 dashboard | ✅ Selesai |
-| Modul CRUD | 4 modul | ✅ Selesai |
-| Database Tabel | 6 tabel | ✅ Selesai |
+| Modul CRUD Admin | 9 modul | ✅ Selesai |
+| Database Tabel | 8 tabel | ✅ Selesai |
 | Role System | 3 role | ✅ Selesai |
 | Export Features | 2 (PDF + Excel) | ✅ Selesai |
+| Export Templates | 5 template | ✅ Selesai |
 
 ---
 
@@ -59,7 +61,12 @@ Project **ONE TOUCH** telah selesai dikembangkan dengan semua fitur core berfung
 | **Sertifikat** | CRUD lengkap + Modal + Validasi | ✅ |
 | **Inspeksi** | CRUD + Upload berkas | ✅ |
 | **User Management** | CRUD user + Assign role | ✅ |
-| **Laporan** | Export PDF + Export Excel | ✅ |
+| **Data Ekspor** | CRUD data ekspor per bulan/tahun | ✅ |
+| **Data SKM** | CRUD data SKM tahunan | ✅ |
+| **News/Berita** | CRUD berita + Upload gambar | ✅ |
+| **Pages** | Edit konten halaman dinamis | ✅ |
+| **SKM Survey** | Lihat + Kelola hasil survey | ✅ |
+| **Laporan** | Export PDF + Export Excel (5 jenis) | ✅ |
 
 #### 🟢 Role: OFFICER
 
@@ -87,9 +94,9 @@ Project **ONE TOUCH** telah selesai dikembangkan dengan semua fitur core berfung
 | **Role Middleware** | Proteksi route berdasarkan role | ✅ |
 | **Dark/Light Mode** | Toggle dengan localStorage | ✅ |
 | **Responsive Design** | Desktop, Tablet, Mobile | ✅ |
-| **Export PDF** | Laravel DomPDF | ✅ |
-| **Export Excel** | Maatwebsite Excel | ✅ |
-| **File Upload** | Laravel Storage (berkas inspeksi) | ✅ |
+| **Export PDF** | Laravel DomPDF (5 template) | ✅ |
+| **Export Excel** | Maatwebsite Excel (5 export class) | ✅ |
+| **File Upload** | Laravel Storage (berkas inspeksi + gambar berita) | ✅ |
 | **Toast Notification** | Notifikasi aksi CRUD | ✅ |
 | **Chart.js Integration** | Grafik interaktif SKM & Ekspor | ✅ |
 
@@ -99,15 +106,16 @@ Project **ONE TOUCH** telah selesai dikembangkan dengan semua fitur core berfung
 
 ### Tabel yang Sudah Dibuat
 
-| Tabel | Deskripsi | Jumlah Field |
-|-------|-----------|--------------|
-| `users` | Data user dengan role (admin, officer, user) | 8 fields |
-| `sertifikats` | Data sertifikat (HACCP, SKP, SPDI, CPIB, CBIB) | 12 fields |
-| `inspeksis` | Data inspeksi & surveilan + upload berkas | 9 fields |
-| `data_skms` | Data Survey Kepuasan Masyarakat | 5 fields |
-| `data_ekspors` | Data ekspor perikanan (frekuensi, volume, nilai) | 6 fields |
-| `pages` | Halaman dinamis (opsional) | - |
-| `news` | Berita/artikel | - |
+| Tabel | Deskripsi | Jumlah Field | Status |
+|-------|-----------|--------------|--------|
+| `users` | Data user dengan role (admin, officer, user) | 12 fields | ✅ |
+| `sertifikats` | Data sertifikat (HACCP, SKP, SPDI, CPIB, CBIB) | 14 fields | ✅ |
+| `inspeksis` | Data inspeksi & surveilan + upload berkas | 10 fields | ✅ |
+| `data_skms` | Data Survey Kepuasan Masyarakat per tahun | 5 fields | ✅ |
+| `data_ekspors` | Data ekspor perikanan (frekuensi, volume, nilai) | 7 fields | ✅ |
+| `news` | Berita/artikel dengan gambar | 8 fields | ✅ |
+| `pages` | Halaman dinamis (konten editable) | 11 fields | ✅ |
+| `skm_surveys` | Hasil survey kepuasan (Q1-Q7) | 17 fields | ✅ |
 
 ### Seeding Data Awal
 
@@ -167,7 +175,12 @@ Project **ONE TOUCH** telah selesai dikembangkan dengan semua fitur core berfung
 | Admin Sertifikat CRUD | ✅ Selesai | Create, Read, Update, Delete dengan modal |
 | Admin Inspeksi CRUD | ✅ Selesai | Include upload berkas |
 | Admin User Management | ✅ Selesai | Tambah/Edit/Hapus user |
-| Admin Laporan Export | ✅ Selesai | PDF + Excel export |
+| Admin Data Ekspor CRUD | ✅ Selesai | CRUD data untuk grafik publik |
+| Admin Data SKM CRUD | ✅ Selesai | CRUD data SKM tahunan |
+| Admin News CRUD | ✅ Selesai | CRUD berita + upload gambar |
+| Admin Pages Management | ✅ Selesai | Edit konten halaman dinamis |
+| Admin SKM Survey | ✅ Selesai | Lihat + kelola hasil survey |
+| Admin Laporan Export | ✅ Selesai | 5 jenis laporan PDF + Excel |
 | Officer Dashboard | ✅ Selesai | Terbatas data yang diinput |
 | Officer Sertifikat CRUD | ✅ Selesai | CRUD data sendiri |
 | Officer Inspeksi CRUD | ✅ Selesai | Include upload berkas |
@@ -177,8 +190,8 @@ Project **ONE TOUCH** telah selesai dikembangkan dengan semua fitur core berfung
 | User Inspeksi View | ✅ Selesai | Read-only + Download berkas |
 | User Laporan Export | ✅ Selesai | PDF + Excel (data sendiri) |
 | Dark/Light Mode Toggle | ✅ Selesai | Aktif di semua halaman (public & internal) |
-| Export PDF | ✅ Selesai | Berfungsi untuk laporan |
-| Export Excel | ✅ Selesai | Berfungsi untuk laporan |
+| Export PDF | ✅ Selesai | 5 template (sertifikat, inspeksi, users, data-ekspor, skm-surveys) |
+| Export Excel | ✅ Selesai | 5 export class |
 | Responsive Design | ✅ Selesai | Desktop, Tablet, Mobile |
 | Toast Notification | ✅ Selesai | Notifikasi aksi CRUD |
 | File Upload Storage | ✅ Selesai | Symlink storage aktif |
@@ -186,19 +199,35 @@ Project **ONE TOUCH** telah selesai dikembangkan dengan semua fitur core berfung
 
 ---
 
-## Poin Lanjutan / Pending
+## Modul Baru (Update Februari 2026)
 
-### ⏳ Fitur yang Bisa Dikembangkan Selanjutnya
+### 1. Data Ekspor Management
+- CRUD data ekspor perikanan per bulan/tahun
+- Field: bulan, tahun, frekuensi, volume (Ton), nilai (USD)
+- Data ditampilkan di grafik portal publik `/ekspor`
+- Export PDF + Excel
 
-| Fitur | Prioritas | Keterangan |
-|-------|-----------|------------|
-| **Scheduler Auto-Update Status** | High | Update otomatis status sertifikat (aktif/warning/expired) |
-| **Notifikasi Kadaluwarsa** | High | Email notifikasi sertifikat akan kadaluwarsa (30 hari) |
-| **Data Real-time** | Medium | Auto-refresh data tanpa reload |
-| **Audit Log** | Medium | Log aktivitas user (CRUD, login, logout) |
-| **File Preview** | Low | Preview berkas sebelum download |
-| **Multi-Language** | Low | Bahasa Inggris/Indonesia toggle |
-| **API Documentation** | Low | Swagger/OpenAPI documentation |
+### 2. Data SKM Management
+- CRUD data SKM tahunan (target & realisasi IKM)
+- Data ditampilkan di grafik portal publik `/skm`
+- Export PDF + Excel
+
+### 3. News/Berita Management
+- CRUD berita dan artikel
+- Upload gambar berita
+- Tampil di halaman media publik
+- Field: title, description, image, event_date, is_active, order
+
+### 4. Pages/Halaman Dinamis
+- Edit konten halaman tanpa ubah kode
+- Field: slug, title, subtitle, content, hero_image, meta_*
+- Hanya edit (tidak ada create/delete untuk menjaga struktur)
+
+### 5. SKM Survey Management
+- Lihat hasil survey kepuasan masyarakat
+- 7 pertanyaan (Q1-Q7) dengan nilai 1.0-4.0
+- Field: nama, email, no_telp, jenis_layanan, saran_masukan
+- Export PDF + Excel
 
 ---
 
@@ -216,26 +245,15 @@ C:\laragon\www\OneTouch\
 │   │   │   │   ├── SertifikatController.php
 │   │   │   │   ├── InspeksiController.php
 │   │   │   │   ├── UserController.php
+│   │   │   │   ├── DataEksporController.php     ← Baru
+│   │   │   │   ├── DataSkmController.php        ← Baru
+│   │   │   │   ├── NewsController.php           ← Baru
+│   │   │   │   ├── PageController.php           ← Baru
+│   │   │   │   ├── SkmSurveyController.php      ← Baru
 │   │   │   │   └── LaporanController.php
 │   │   │   ├── Officer/                         ✅
-│   │   │   │   ├── DashboardController.php
-│   │   │   │   ├── SertifikatController.php
-│   │   │   │   ├── InspeksiController.php
-│   │   │   │   └── LaporanController.php
 │   │   │   ├── User/                            ✅
-│   │   │   │   ├── DashboardController.php
-│   │   │   │   ├── SertifikatController.php
-│   │   │   │   ├── InspeksiController.php
-│   │   │   │   └── LaporanController.php
 │   │   │   └── Public/                          ✅
-│   │   │       ├── BerandaController.php
-│   │   │       ├── LayananController.php
-│   │   │       ├── SkmController.php
-│   │   │       ├── EksporController.php
-│   │   │       ├── MediaController.php
-│   │   │       ├── AplikasiController.php
-│   │   │       ├── RegulasiController.php
-│   │   │       └── AboutController.php
 │   │   └── Middleware/
 │   │       └── RoleMiddleware.php               ✅
 │   ├── Models/                                  ✅
@@ -243,52 +261,60 @@ C:\laragon\www\OneTouch\
 │   │   ├── Sertifikat.php
 │   │   ├── Inspeksi.php
 │   │   ├── DataSkm.php
-│   │   └── DataEkspor.php
+│   │   ├── DataEkspor.php
+│   │   ├── News.php                             ← Baru
+│   │   ├── Page.php                             ← Baru
+│   │   └── SkmSurvey.php                        ← Baru
 │   └── Exports/                                 ✅
 │       ├── InspeksiExport.php
 │       ├── SertifikatExport.php
-│       └── SkmSurveyExport.php
+│       ├── SkmSurveyExport.php                  ← Baru
+│       ├── DataEksporExport.php                 ← Baru
+│       └── UserExport.php                       ← Baru
 ├── database/
 │   ├── migrations/                              ✅
 │   │   ├── create_users_table.php
 │   │   ├── create_sertifikats_table.php
 │   │   ├── create_inspeksis_table.php
 │   │   ├── create_data_skms_table.php
-│   │   └── create_data_ekspors_table.php
-│   ├── seeders/                                ✅
-│   │   ├── UserSeeder.php
-│   │   ├── SertifikatSeeder.php
-│   │   ├── InspeksiSeeder.php
-│   │   ├── DataSkmSeeder.php
-│   │   └── DataEksporSeeder.php
+│   │   ├── create_data_ekspors_table.php
+│   │   ├── create_skm_surveys_table.php         ← Baru
+│   │   ├── create_pages_table.php               ← Baru
+│   │   ├── create_news_table.php                ← Baru
+│   │   └── add_fields_to_data_ekspors_table.php ← Baru
+│   ├── seeders/                                 ✅
 │   └── onetouch.sql                             ✅
 ├── resources/
 │   └── views/
-│       ├── layouts/
-│       │   ├── public.blade.php                 ✅
-│       │   └── internal.blade.php               ✅
-│       ├── auth/
-│       │   └── login.blade.php                  ✅
+│       ├── layouts/                             ✅
+│       ├── auth/                                ✅
 │       ├── public/                              ✅ (8 halaman)
-│       ├── admin/                               ✅ (dashboard + CRUD)
-│       ├── officer/                             ✅ (dashboard + CRUD)
-│       ├── user/                                ✅ (dashboard + view)
-│       └── pdf/                                 ✅ (template export)
+│       ├── admin/                               ✅
+│       │   ├── dashboard.blade.php
+│       │   ├── sertifikat/
+│       │   ├── inspeksi/
+│       │   ├── users/
+│       │   ├── data-ekspor/                     ← Baru
+│       │   ├── data-skm/                        ← Baru
+│       │   ├── news/                            ← Baru
+│       │   ├── pages/                           ← Baru
+│       │   ├── skm/                             ← Baru
+│       │   └── laporan/
+│       ├── officer/                             ✅
+│       ├── user/                                ✅
+│       └── pdf/                                 ✅
+│           ├── laporan-sertifikat.blade.php
+│           ├── laporan-inspeksi.blade.php
+│           ├── data-ekspor.blade.php            ← Baru
+│           ├── skm-surveys.blade.php            ← Baru
+│           └── users.blade.php                  ← Baru
 ├── routes/
-│   └── web.php                                 ✅ (route groups)
+│   └── web.php                                 ✅
 ├── public/
-│   └── assets/                                 ✅ (logo, background, images)
+│   └── assets/                                 ✅
+│       ├── news/                                ← Baru (upload berita)
+│       └── Struktur_organisasi/
 └── 00petunjuk/                                  ✅ (10 dokumentasi)
-    ├── 01-overview.md
-    ├── 02-struktur-folder.md
-    ├── 03-alur-request.md
-    ├── 04-autentikasi-dan-role.md
-    ├── 05-public-portal.md
-    ├── 06-sistem-internal.md
-    ├── 07-database-dan-model.md
-    ├── 08-tema-dan-styling.md
-    ├── 09-panduan-development.md
-    └── 10-laporan-kemajuan.md                  ← File ini
 ```
 
 ---
@@ -332,25 +358,44 @@ C:\laragon\www\OneTouch\
 
 ---
 
+## Poin Lanjutan / Pending
+
+### ⏳ Fitur yang Bisa Dikembangkan Selanjutnya
+
+| Fitur | Prioritas | Keterangan |
+|-------|-----------|------------|
+| **Scheduler Auto-Update Status** | High | Update otomatis status sertifikat (aktif/warning/expired) |
+| **Notifikasi Kadaluwarsa** | High | Email notifikasi sertifikat akan kadaluwarsa (30 hari) |
+| **SKM Survey Form Publik** | High | Form survey untuk diisi masyarakat |
+| **Data Real-time** | Medium | Auto-refresh data tanpa reload |
+| **Audit Log** | Medium | Log aktivitas user (CRUD, login, logout) |
+| **File Preview** | Low | Preview berkas sebelum download |
+| **Multi-Language** | Low | Bahasa Inggris/Indonesia toggle |
+| **API Documentation** | Low | Swagger/OpenAPI documentation |
+
+---
+
 ## Kesimpulan
 
-Project **ONE TOUCH** telah selesai dikembangkan dengan semua fitur core berfungsi penuh. Sistem siap digunakan untuk:
+Project **ONE TOUCH** telah selesai dikembangkan dengan semua fitur core dan modul tambahan berfungsi penuh. Sistem siap digunakan untuk:
 
 1. **Publik** — Mengakses informasi layanan, data SKM, dan statistik ekspor
-2. **Admin** — Mengelola semua data sertifikat, inspeksi, dan user
+2. **Admin** — Mengelola semua data sertifikat, inspeksi, user, berita, halaman, dan data master
 3. **Officer** — Menginput data sertifikat dan inspeksi
 4. **User** — Melihat data sertifikat dan inspeksi milik sendiri
 
 ### Saran untuk Development Selanjutnya
 
-1. Implementasi **Scheduler** untuk auto-update status sertifikat
-2. Tambah fitur **Notifikasi Email** untuk sertifikat kadaluwarsa
-3. Lakukan **UAT (User Acceptance Testing)** dengan user sebenarnya
-4. Siapkan untuk **deployment ke production server**
-5. Buat **backup database** rutin
+1. Implementasi **Form Survey SKM** untuk publik mengisi survey
+2. Implementasi **Scheduler** untuk auto-update status sertifikat
+3. Tambah fitur **Notifikasi Email** untuk sertifikat kadaluwarsa
+4. Lakukan **UAT (User Acceptance Testing)** dengan user sebenarnya
+5. Siapkan untuk **deployment ke production server**
+6. Buat **backup database** rutin
 
 ---
 
-*📝 Laporan dibuat otomatis oleh AI Development Team*  
-*📅 Tanggal: 20 Februari 2026*  
-*🔧 Project: ONE TOUCH - Balai PPMHKP Lampung*
+*📝 Laporan diperbarui otomatis oleh AI Development Team*  
+*📅 Tanggal: 23 Februari 2026*  
+*🔧 Project: ONE TOUCH - Balai PPMHKP Lampung*  
+*📦 Versi: v2.0.0*

@@ -80,11 +80,35 @@ html.dark { --surface: #1e293b; --surface-2: #0f172a; ... }
 | PUT    | `/admin/users/{user}`        | `admin.users.update`        | Admin\UserController@update        |
 | DELETE | `/admin/users/{user}`        | `admin.users.destroy`       | Admin\UserController@destroy       |
 | POST   | `/admin/users/{user}/assign-officer` | `admin.users.assign-officer` | Admin\UserController@assignOfficer |
+| GET    | `/admin/data-ekspor`         | `admin.data-ekspor.index`   | Admin\DataEksporController@index   |
+| GET    | `/admin/data-ekspor/create`  | `admin.data-ekspor.create`  | Admin\DataEksporController@create  |
+| POST   | `/admin/data-ekspor`         | `admin.data-ekspor.store`   | Admin\DataEksporController@store   |
+| GET    | `/admin/data-ekspor/{id}/edit`| `admin.data-ekspor.edit`  | Admin\DataEksporController@edit    |
+| PUT    | `/admin/data-ekspor/{id}`    | `admin.data-ekspor.update`  | Admin\DataEksporController@update  |
+| DELETE | `/admin/data-ekspor/{id}`    | `admin.data-ekspor.destroy` | Admin\DataEksporController@destroy |
+| GET    | `/admin/data-skm`            | `admin.data-skm.index`      | Admin\DataSkmController@index      |
+| *(CRUD sama seperti data-ekspor)* | | | |
+| GET    | `/admin/news`                | `admin.news.index`          | Admin\NewsController@index         |
+| *(CRUD sama)* | | | |
+| GET    | `/admin/pages`               | `admin.pages.index`         | Admin\PageController@index         |
+| GET    | `/admin/pages/{id}/edit`     | `admin.pages.edit`          | Admin\PageController@edit          |
+| PUT    | `/admin/pages/{id}`          | `admin.pages.update`        | Admin\PageController@update        |
+| GET    | `/admin/skm`                 | `admin.skm.index`           | Admin\SkmSurveyController@index    |
+| GET    | `/admin/skm/{id}`            | `admin.skm.show`            | Admin\SkmSurveyController@show     |
+| GET    | `/admin/skm/{id}/edit`       | `admin.skm.edit`            | Admin\SkmSurveyController@edit     |
+| PUT    | `/admin/skm/{id}`            | `admin.skm.update`          | Admin\SkmSurveyController@update   |
+| DELETE | `/admin/skm/{id}`            | `admin.skm.destroy`         | Admin\SkmSurveyController@destroy  |
 | GET    | `/admin/laporan`             | `admin.laporan.index`       | Admin\LaporanController@index      |
 | GET    | `/admin/laporan/sertifikat/pdf` | `admin.laporan.sertifikat.pdf` | Admin\LaporanController@sertifikatPdf |
 | GET    | `/admin/laporan/sertifikat/excel` | `admin.laporan.sertifikat.excel` | Admin\LaporanController@sertifikatExcel |
 | GET    | `/admin/laporan/inspeksi/pdf` | `admin.laporan.inspeksi.pdf` | Admin\LaporanController@inspeksiPdf |
 | GET    | `/admin/laporan/inspeksi/excel` | `admin.laporan.inspeksi.excel` | Admin\LaporanController@inspeksiExcel |
+| GET    | `/admin/laporan/users/pdf`   | `admin.laporan.users.pdf`   | Admin\LaporanController@usersPdf   |
+| GET    | `/admin/laporan/users/excel` | `admin.laporan.users.excel` | Admin\LaporanController@usersExcel |
+| GET    | `/admin/laporan/data-ekspor/pdf` | `admin.laporan.data-ekspor.pdf` | Admin\LaporanController@dataEksporPdf |
+| GET    | `/admin/laporan/data-ekspor/excel` | `admin.laporan.data-ekspor.excel` | Admin\LaporanController@dataEksporExcel |
+| GET    | `/admin/laporan/skm-surveys/pdf` | `admin.laporan.skm-surveys.pdf` | Admin\LaporanController@skmSurveysPdf |
+| GET    | `/admin/laporan/skm-surveys/excel` | `admin.laporan.skm-surveys.excel` | Admin\LaporanController@skmSurveysExcel |
 
 ### Views Admin
 
@@ -106,6 +130,25 @@ resources/views/admin/
 │   ├── create.blade.php         ← Form tambah user
 │   ├── edit.blade.php           ← Form edit user (termasuk assign officer)
 │   └── show.blade.php           ← Detail user + data sertifikat/inspeksi miliknya
+├── data-ekspor/
+│   ├── index.blade.php          ← Tabel data ekspor
+│   ├── create.blade.php         ← Form tambah data ekspor
+│   └── edit.blade.php           ← Form edit data ekspor
+├── data-skm/
+│   ├── index.blade.php          ← Tabel data SKM tahunan
+│   ├── create.blade.php         ← Form tambah data SKM
+│   └── edit.blade.php           ← Form edit data SKM
+├── news/
+│   ├── index.blade.php          ← Tabel berita
+│   ├── create.blade.php         ← Form tambah berita
+│   └── edit.blade.php           ← Form edit berita
+├── pages/
+│   ├── index.blade.php          ← Tabel halaman dinamis
+│   └── edit.blade.php           ← Form edit konten halaman
+├── skm/
+│   ├── index.blade.php          ← Tabel SKM survey (hasil survey)
+│   ├── edit.blade.php           ← Form edit/status survey
+│   └── show.blade.php           ← Detail survey
 └── laporan/
     └── index.blade.php          ← Filter + tombol export PDF/Excel
 ```
@@ -166,6 +209,40 @@ $sertifikats = Sertifikat::with('user')
 | GET    | `/user/laporan/sertifikat/excel` | `user.laporan.sertifikat.excel` | User\LaporanController@sertifikatExcel |
 
 **Tidak ada** route `create`, `store`, `edit`, `update`, `destroy` untuk User.
+
+---
+
+## Modul Admin Baru
+
+### 1. Data Ekspor (`/admin/data-ekspor`)
+CRUD data ekspor perikanan:
+- **Field:** bulan, tahun, frekuensi, volume (Ton), nilai (USD)
+- **Fungsi:** Data untuk grafik ekspor di portal publik
+- **Export:** PDF + Excel
+
+### 2. Data SKM (`/admin/data-skm`)
+CRUD data SKM tahunan:
+- **Field:** tahun, target IKM, realisasi IKM
+- **Fungsi:** Data untuk grafik SKM di portal publik
+- **Export:** PDF + Excel
+
+### 3. News/Berita (`/admin/news`)
+CRUD berita dan artikel:
+- **Field:** title, description, image, event_date, is_active, order
+- **Fungsi:** Berita untuk halaman media publik
+- **Upload:** Gambar berita ke `public/assets/news/`
+
+### 4. Pages/Halaman (`/admin/pages`)
+CRUD halaman dinamis:
+- **Field:** slug, title, subtitle, content, hero_image, meta_title, meta_description, is_active, order
+- **Fungsi:** Mengedit konten halaman tanpa ubah kode
+- **Note:** Hanya edit (tidak ada create/delete untuk menjaga struktur)
+
+### 5. SKM Survey (`/admin/skm`)
+Manajemen hasil survey kepuasan masyarakat:
+- **Field:** nama, email, no_telp, jenis_layanan, Q1-Q7 (nilai 1-4), saran_masukan, status
+- **Fungsi:** Melihat dan mengelola hasil survey dari publik
+- **Export:** PDF + Excel
 
 ---
 

@@ -67,6 +67,11 @@ Frontend (Tanpa build tool / pure HTML+CSS+JS)
 | CRUD Inspeksi              | ✅    | ✅      | ❌   | ❌     |
 | Manajemen User             | ✅    | ❌      | ❌   | ❌     |
 | Assign Officer ke User     | ✅    | ❌      | ❌   | ❌     |
+| CRUD Data Ekspor           | ✅    | ❌      | ❌   | ❌     |
+| CRUD Data SKM              | ✅    | ❌      | ❌   | ❌     |
+| CRUD News/Berita           | ✅    | ❌      | ❌   | ❌     |
+| CRUD Pages (Halaman)       | ✅    | ❌      | ❌   | ❌     |
+| CRUD SKM Survey            | ✅    | ❌      | ❌   | ❌     |
 | Export PDF                 | ✅    | ✅      | ✅   | ❌     |
 | Export Excel               | ✅    | ✅      | ✅   | ❌     |
 | Grafik SKM                 | ❌    | ❌      | ❌   | ✅     |
@@ -128,6 +133,11 @@ php artisan serve
 /admin/sertifikat ─────── Manajemen Sertifikat (Admin)
 /admin/inspeksi ───────── Manajemen Inspeksi (Admin)
 /admin/users ──────────── Manajemen User (Admin)
+/admin/data-ekspor ────── Manajemen Data Ekspor (Admin)
+/admin/data-skm ───────── Manajemen Data SKM (Admin)
+/admin/news ───────────── Manajemen Berita (Admin)
+/admin/pages ──────────── Manajemen Halaman (Admin)
+/admin/skm ────────────── Manajemen SKM Survey (Admin)
 /admin/laporan ────────── Laporan (Admin)
 /officer/dashboard ────── Dashboard Officer
 /officer/sertifikat ───── Sertifikat (Officer)
@@ -137,4 +147,3 @@ php artisan serve
 /user/sertifikat ──────── Sertifikat (User, read-only)
 /user/inspeksi ────────── Inspeksi (User, read-only)
 /user/laporan ─────────── Laporan (User)
-```

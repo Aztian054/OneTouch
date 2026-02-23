@@ -14,20 +14,29 @@ OneTouch/
 │   ├── 06-sistem-internal.md
 │   ├── 07-database-dan-model.md
 │   ├── 08-tema-dan-styling.md
-│   └── 09-panduan-development.md
+│   ├── 09-panduan-development.md
+│   └── 10-laporan-kemajuan.md
 │
 ├── app/
 │   ├── Exports/                 ← Kelas export Excel (maatwebsite)
+│   │   ├── DataEksporExport.php ← Export data ekspor ke .xlsx
 │   │   ├── InspeksiExport.php   ← Export data inspeksi ke .xlsx
-│   │   └── SertifikatExport.php ← Export data sertifikat ke .xlsx
+│   │   ├── SkmSurveyExport.php  ← Export data SKM survey ke .xlsx
+│   │   ├── SertifikatExport.php ← Export data sertifikat ke .xlsx
+│   │   └── UserExport.php       ← Export data user ke .xlsx
 │   │
 │   ├── Http/
 │   │   ├── Controllers/
 │   │   │   ├── Controller.php   ← Base controller (abstract)
 │   │   │   ├── Admin/           ← Controller panel Admin
 │   │   │   │   ├── DashboardController.php
+│   │   │   │   ├── DataEksporController.php  ← CRUD data ekspor
+│   │   │   │   ├── DataSkmController.php     ← CRUD data SKM tahunan
 │   │   │   │   ├── InspeksiController.php
 │   │   │   │   ├── LaporanController.php
+│   │   │   │   ├── NewsController.php        ← CRUD berita/artikel
+│   │   │   │   ├── PageController.php        ← CRUD halaman dinamis
+│   │   │   │   ├── SkmSurveyController.php   ← CRUD SKM survey
 │   │   │   │   ├── SertifikatController.php
 │   │   │   │   └── UserController.php
 │   │   │   ├── Auth/
@@ -63,21 +72,16 @@ OneTouch/
 │   │   ├── DataEkspor.php       ← Model tabel data_ekspors
 │   │   ├── DataSkm.php          ← Model tabel data_skms
 │   │   ├── Inspeksi.php         ← Model tabel inspeksis
+│   │   ├── News.php             ← Model tabel news (berita/artikel)
+│   │   ├── Page.php             ← Model tabel pages (halaman dinamis)
 │   │   ├── Sertifikat.php       ← Model tabel sertifikats
+│   │   ├── SkmSurvey.php        ← Model tabel skm_surveys
 │   │   └── User.php             ← Model tabel users (dengan role + relasi)
 │   │
 │   └── Providers/
 │       ├── AppServiceProvider.php     ← Boot aplikasi
 │       ├── AuthServiceProvider.php    ← Policy & Gate
 │       └── RouteServiceProvider.php   ← HOME constant = '/login'
-│
-├── assets/                      ← Logo & gambar (sumber asli)
-│   ├── header-logo1-kkp.png
-│   ├── header-logo2-bppmhkp.png
-│   ├── Portal-LogoKKP-TeksPutih.png
-│   ├── Portal-LogoKKPRound-Warna.png
-│   ├── bg-dark.jpg
-│   └── bg-light.jpg
 │
 ├── config/
 │   ├── app.php          ← Timezone (Asia/Jakarta), locale, key
@@ -91,15 +95,32 @@ OneTouch/
 │   │   ├── ..._create_sertifikats_table.php
 │   │   ├── ..._create_inspeksis_table.php
 │   │   ├── ..._create_data_skms_table.php
-│   │   └── ..._create_data_ekspors_table.php
+│   │   ├── ..._create_data_ekspors_table.php
+│   │   ├── ..._add_berkas_to_sertifikats_table.php
+│   │   ├── ..._create_skm_surveys_table.php
+│   │   ├── ..._create_pages_table.php
+│   │   ├── ..._create_news_table.php
+│   │   └── ..._add_fields_to_data_ekspors_table.php
 │   ├── seeders/
-│   │   └── DatabaseSeeder.php   ← Kosong (data sudah ada di DB)
+│   │   ├── DatabaseSeeder.php   ← Seeder utama
+│   │   └── EksporSeeder.php     ← Seeder data ekspor
 │   └── onetouch.sql             ← Export lengkap database (CREATE + INSERT)
 │
 ├── public/
 │   ├── index.php        ← Entry point aplikasi Laravel
 │   ├── .htaccess        ← URL rewrite untuk Apache/Laragon
 │   └── assets/          ← Logo & gambar yang diakses lewat web
+│       ├── header-logo1-kkp.png
+│       ├── header-logo2-bppmhkp.png
+│       ├── Portal-Logo-KKP-TeksHitam.png
+│       ├── Portal-LogoKKP-TeksPutih.png
+│       ├── Portal-LogoKKPRound-TeksPutih.png
+│       ├── Portal-LogoKKPRound-Warna.png
+│       ├── bg-dark.jpg
+│       ├── bg-light.jpg
+│       ├── news/                    ← Folder upload gambar berita
+│       └── Struktur_organisasi/
+│           └── S_Organisasi.jpeg
 │
 ├── resources/
 │   ├── css/app.css      ← CSS kosong (tidak dipakai, styling ada di Blade)
@@ -124,7 +145,12 @@ OneTouch/
 │       │   ├── sertifikat/ (index, create, edit, show)
 │       │   ├── inspeksi/   (index, create, edit, show)
 │       │   ├── users/      (index, create, edit, show)
-│       │   └── laporan/    (index)
+│       │   ├── data-ekspor/ (index, create, edit)
+│       │   ├── data-skm/    (index, create, edit)
+│       │   ├── news/        (index, create, edit)
+│       │   ├── pages/       (index, edit)
+│       │   ├── skm/         (index, edit, show)
+│       │   └── laporan/     (index)
 │       ├── officer/
 │       │   ├── dashboard.blade.php
 │       │   ├── sertifikat/ (index, create, edit, show)
@@ -136,8 +162,11 @@ OneTouch/
 │       │   ├── inspeksi/   (index, show)
 │       │   └── laporan/    (index)
 │       └── pdf/
+│           ├── data-ekspor.blade.php     ← Template PDF data ekspor
+│           ├── laporan-inspeksi.blade.php ← Template PDF inspeksi
 │           ├── laporan-sertifikat.blade.php ← Template PDF sertifikat
-│           └── laporan-inspeksi.blade.php   ← Template PDF inspeksi
+│           ├── skm-surveys.blade.php     ← Template PDF SKM survey
+│           └── users.blade.php           ← Template PDF users
 │
 ├── routes/
 │   └── web.php          ← SEMUA route aplikasi (publik + auth + admin + officer + user)
@@ -156,12 +185,12 @@ OneTouch/
 ## Penjelasan File Kritis
 
 ### `routes/web.php`
-**File terpenting** — mendefinisikan semua URL aplikasi. Dibagi 4 section:
-1. **Public** (baris ~5–14) — 8 route tanpa auth
-2. **Auth** (baris ~19–26) — login/logout
-3. **Admin** (baris ~31–58) — prefix `/admin`, middleware `role:admin`
-4. **Officer** (baris ~63–82) — prefix `/officer`, middleware `role:officer`
-5. **User** (baris ~87–103) — prefix `/user`, middleware `role:user`
+**File terpenting** — mendefinisikan semua URL aplikasi. Dibagi 5 section:
+1. **Public** — 8 route tanpa auth
+2. **Auth** — login/logout
+3. **Admin** — prefix `/admin`, middleware `role:admin`
+4. **Officer** — prefix `/officer`, middleware `role:officer`
+5. **User** — prefix `/user`, middleware `role:user`
 
 ### `app/Http/Kernel.php`
 Registrasi middleware alias `role` → `RoleMiddleware::class` sehingga bisa dipakai di route.
@@ -185,3 +214,50 @@ Layout master untuk semua halaman internal (admin/officer/user). Berisi:
 - Topbar dengan info user + tombol logout + dark mode
 - `@yield('content')`
 - JS dark mode (localStorage key: `theme`, class `dark` pada `<html>`)
+
+---
+
+## Controllers Admin Baru
+
+### `DataEksporController.php`
+CRUD data ekspor perikanan (frekuensi, volume, nilai per bulan/tahun).
+
+### `DataSkmController.php`
+CRUD data SKM tahunan (target & realisasi IKM per tahun).
+
+### `NewsController.php`
+CRUD berita/artikel untuk halaman media publik.
+
+### `PageController.php`
+CRUD halaman dinamis (konten yang bisa diedit tanpa kode).
+
+### `SkmSurveyController.php`
+CRUD hasil survey kepuasan masyarakat (responden + jawaban Q1-Q7).
+
+---
+
+## Models Baru
+
+### `News.php`
+```php
+protected $fillable = [
+    'title', 'description', 'image', 'event_date', 'is_active', 'order'
+];
+```
+
+### `Page.php`
+```php
+protected $fillable = [
+    'slug', 'title', 'subtitle', 'content', 'hero_image',
+    'meta_title', 'meta_description', 'is_active', 'order'
+];
+```
+
+### `SkmSurvey.php`
+```php
+protected $fillable = [
+    'nama', 'email', 'no_telp', 'jenis_layanan',
+    'q1_kualitas_pelayanan', 'q2_kompetensi_petugas', 'q3_kecepatan',
+    'q4_kenyamanan', 'q5_kenyamanan_sarpras', 'q6_fasilitas', 'q7_penampilan',
+    'saran_masukan', 'ip_address', 'submitted_at', 'status'
+];
