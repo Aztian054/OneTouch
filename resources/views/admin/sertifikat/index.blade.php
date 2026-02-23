@@ -41,7 +41,7 @@
       <thead>
         <tr>
           <th>No</th><th>Nama Pemilik</th><th>No. Sertifikat</th><th>Jenis</th>
-          <th>Grade</th><th>Kadaluwarsa</th><th>Status</th><th>Proses</th><th>Aksi</th>
+          <th>Grade</th><th>Kadaluwarsa</th><th>Status</th><th>Keterangan</th><th>Proses</th><th>Aksi</th>
         </tr>
       </thead>
       <tbody>
@@ -57,6 +57,15 @@
           <td><span class="badge" style="background:#e0f2fe; color:#0369a1">{{ $s->grade }}</span></td>
           <td>{{ $s->tanggal_kadaluwarsa?->format('d/m/Y') }}</td>
           <td><span class="badge badge-{{ $s->status_masa }}">{{ $s->status_masa }}</span></td>
+          <td style="font-size:12px; color:var(--text-muted);">
+            @if($s->status_masa == 'aktif')
+              Sertifikat masih berlaku (> 15 hari)
+            @elseif($s->status_masa == 'warning')
+              Akan kadaluwarsa dalam ≤ 15 hari
+            @elseif($s->status_masa == 'expired')
+              Sudah kadaluwarsa
+            @endif
+          </td>
           <td><span class="badge badge-{{ strtolower($s->status_proses) }}">{{ $s->status_proses }}</span></td>
           <td>
             <div style="display:flex; gap:4px">
@@ -70,7 +79,7 @@
           </td>
         </tr>
         @empty
-        <tr><td colspan="9"><div class="empty-state"><i class="fas fa-certificate"></i><p>Belum ada data sertifikat</p></div></td></tr>
+        <tr><td colspan="10"><div class="empty-state"><i class="fas fa-certificate"></i><p>Belum ada data sertifikat</p></div></td></tr>
         @endforelse
       </tbody>
     </table>

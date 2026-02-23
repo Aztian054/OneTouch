@@ -18,6 +18,16 @@ class DashboardController extends Controller
         $sertifikatExpired = Sertifikat::where('user_id', $userId)->where('status_masa', 'expired')->count();
         $totalInspeksi     = Inspeksi::where('user_id', $userId)->count();
 
+        // Chart data: Sertifikat per Jenis
+        $sertifikatPerJenis = Sertifikat::where('user_id', $userId)
+            ->selectRaw('jenis_sertifikat, COUNT(*) as total')
+            ->groupBy('jenis_sertifikat')
+            ->get();
+
+        // Recent sertifikat
+        $recentSertifikat = Sertifikat::where('user_id', $userId)
+            ->latest()->limit(5)->get();
+
         $warningList = Sertifikat::where('user_id', $userId)
             ->where('status_masa', 'warning')
             ->latest('tanggal_kadaluwarsa')
@@ -28,7 +38,8 @@ class DashboardController extends Controller
 
         return view('user.dashboard', compact(
             'totalSertifikat', 'sertifikatAktif', 'sertifikatWarning', 'sertifikatExpired',
-            'totalInspeksi', 'warningList', 'recentInspeksi'
+            'totalInspeksi', 'sertifikatPerJenis', 'recentSertifikat',
+            'warningList', 'recentInspeksi'
         ));
     }
 }

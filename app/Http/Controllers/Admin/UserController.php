@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Exports\UserExport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UserController extends Controller
 {
@@ -118,5 +121,40 @@ class UserController extends Controller
 
         $user->update(['officer_id' => $request->officer_id]);
         return back()->with('success', 'Officer berhasil di-assign.');
+    }
+
+    public function exportPdf(Request $request)
+    {
+        $query = User::query()->with('officer');
+
+        // Apply filters
+        if ($request->filled('search')) {
+            $q = $request->search;
+            $query->where(function ($qb) use ($q) {
+                $qb->where('name', 'like', "%$q%")
+                   ->orWhere('username', 'like', "%$q%");
+            });
+        }
+        if ($request->filled('role')) {
+            $query->where('role', $request->role);
+        }
+        if ($request->filled('tahun')) {
+            $query->whereYear('created_at', $request->tahun);
+        }
+
+        $users = $query->latest()->get();
+
+        $pdf = Pdf::loadView('pdf.users', compact('users'))
+            ->setPaper('a4', 'landscape');
+
+        return $pdf->download('laporan-users-' . now()->format('Ymd') . '.pdf');
+    }
+
+    public function exportExcel(Request $request)
+    {
+        return Excel::download(
+            new UserExport($request->all()),
+            'laporan-users-' . now()->format('Ymd') . '.xlsx'
+        );
     }
 }

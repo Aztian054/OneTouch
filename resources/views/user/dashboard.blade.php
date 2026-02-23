@@ -1,108 +1,109 @@
 @extends('layouts.internal')
 @section('title','Dashboard')
 @section('breadcrumb','Dashboard')
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+  const labels = @json($sertifikatPerJenis->pluck('jenis_sertifikat'));
+  const data   = @json($sertifikatPerJenis->pluck('total'));
+  new Chart(document.getElementById('jenisChart'),{
+    type:'doughnut',
+    data:{ labels, datasets:[{ data, backgroundColor:['#0f172a','#1e3a5f','#d4af37','#b8960a','#22c55e','#3b82f6','#f59e0b','#ef4444','#8b5cf6','#06b6d4'] }] },
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'right' } } }
+  });
+});
+</script>
+@endpush
+
 @section('content')
 <div class="page-header">
   <div>
-    <div class="page-title">Selamat Datang, {{ auth()->user()->name }}</div>
-    <div class="page-subtitle">Ringkasan data sertifikat dan inspeksi Anda</div>
+    <div class="page-title">Dashboard</div>
+    <div class="page-subtitle">Selamat datang, {{ auth()->user()->name }}. Berikut ringkasan data sertifikat dan inspeksi Anda.</div>
   </div>
 </div>
 
-{{-- Stats --}}
 <div class="stats-grid">
   <div class="stat-card">
-    <div class="stat-icon" style="background:rgba(212,175,55,.12)"><i class="fas fa-certificate" style="color:var(--gold)"></i></div>
-    <div class="stat-body">
-      <div class="stat-value">{{ $totalSertifikat }}</div>
-      <div class="stat-label">Total Sertifikat</div>
-    </div>
+    <div class="stat-icon gold"><i class="fas fa-certificate"></i></div>
+    <div><div class="stat-value">{{ $totalSertifikat }}</div><div class="stat-label">Total Sertifikat</div></div>
   </div>
   <div class="stat-card">
-    <div class="stat-icon" style="background:rgba(34,197,94,.12)"><i class="fas fa-check-circle" style="color:#22c55e"></i></div>
-    <div class="stat-body">
-      <div class="stat-value">{{ $sertifikatAktif }}</div>
-      <div class="stat-label">Sertifikat Aktif</div>
-    </div>
+    <div class="stat-icon success"><i class="fas fa-circle-check"></i></div>
+    <div><div class="stat-value">{{ $sertifikatAktif }}</div><div class="stat-label">Sertifikat Aktif</div></div>
   </div>
   <div class="stat-card">
-    <div class="stat-icon" style="background:rgba(234,179,8,.12)"><i class="fas fa-exclamation-triangle" style="color:#eab308"></i></div>
-    <div class="stat-body">
-      <div class="stat-value">{{ $sertifikatWarning }}</div>
-      <div class="stat-label">Akan Expired</div>
-    </div>
+    <div class="stat-icon warning"><i class="fas fa-triangle-exclamation"></i></div>
+    <div><div class="stat-value">{{ $sertifikatWarning }}</div><div class="stat-label">Akan kadaluwarsa dalam ≤ 15 hari</div></div>
   </div>
   <div class="stat-card">
-    <div class="stat-icon" style="background:rgba(239,68,68,.12)"><i class="fas fa-times-circle" style="color:#ef4444"></i></div>
-    <div class="stat-body">
-      <div class="stat-value">{{ $sertifikatExpired }}</div>
-      <div class="stat-label">Sertifikat Expired</div>
-    </div>
+    <div class="stat-icon danger"><i class="fas fa-circle-xmark"></i></div>
+    <div><div class="stat-value">{{ $sertifikatExpired }}</div><div class="stat-label">Kadaluwarsa</div></div>
   </div>
   <div class="stat-card">
-    <div class="stat-icon" style="background:rgba(99,102,241,.12)"><i class="fas fa-clipboard-check" style="color:#6366f1"></i></div>
-    <div class="stat-body">
-      <div class="stat-value">{{ $totalInspeksi }}</div>
-      <div class="stat-label">Total Inspeksi</div>
-    </div>
+    <div class="stat-icon info"><i class="fas fa-clipboard-check"></i></div>
+    <div><div class="stat-value">{{ $totalInspeksi }}</div><div class="stat-label">Total Inspeksi</div></div>
   </div>
 </div>
 
-<div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:24px">
-  {{-- Sertifikat warning --}}
+<div style="display:grid; grid-template-columns:1fr 1.4fr; gap:20px; margin-bottom:20px">
+  <div class="card">
+    <div class="card-header"><span class="card-title">Sertifikat per Jenis</span></div>
+    <div class="card-body" style="height:260px; position:relative">
+      <canvas id="jenisChart"></canvas>
+    </div>
+  </div>
   <div class="card">
     <div class="card-header">
-      <span class="card-title"><i class="fas fa-exclamation-triangle" style="color:var(--gold)"></i> Sertifikat Akan Expired</span>
-      <a href="{{ route('user.sertifikat.index') }}" style="font-size:12px; color:var(--text-muted)">Lihat semua</a>
+      <span class="card-title">Sertifikat Terbaru</span>
+      <a href="{{ route('user.sertifikat.index') }}" class="btn btn-outline btn-sm">Lihat Semua</a>
     </div>
-    <div class="card-body" style="padding:0">
-      @if($warningList->isEmpty())
-        <div style="padding:20px; text-align:center; color:var(--text-muted)">Tidak ada sertifikat yang akan expired.</div>
-      @else
-      <table class="table">
-        <thead><tr><th>No. Sertifikat</th><th>Jenis</th><th>Tgl Habis</th></tr></thead>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>Nama</th><th>Jenis</th><th>Status</th></tr></thead>
         <tbody>
-          @foreach($warningList as $s)
+          @forelse($recentSertifikat as $s)
           <tr>
-            <td><a href="{{ route('user.sertifikat.show',$s->id) }}">{{ $s->nomor_sertifikat }}</a></td>
+            <td>{{ $s->nama_pemilik }}</td>
             <td>{{ $s->jenis_sertifikat }}</td>
-            <td><span class="badge badge-warning">{{ \Carbon\Carbon::parse($s->tanggal_kadaluwarsa)->format('d/m/Y') }}</span></td>
+            <td><span class="badge badge-{{ $s->status_masa }}">{{ $s->status_masa }}</span></td>
           </tr>
-          @endforeach
+          @empty
+          <tr><td colspan="3" style="text-align:center; color:var(--text-muted)">Belum ada data</td></tr>
+          @endforelse
         </tbody>
       </table>
-      @endif
-    </div>
-  </div>
-
-  {{-- Inspeksi terbaru --}}
-  <div class="card">
-    <div class="card-header">
-      <span class="card-title"><i class="fas fa-clipboard-list" style="color:var(--navy)"></i> Inspeksi Terbaru</span>
-      <a href="{{ route('user.inspeksi.index') }}" style="font-size:12px; color:var(--text-muted)">Lihat semua</a>
-    </div>
-    <div class="card-body" style="padding:0">
-      @if($recentInspeksi->isEmpty())
-        <div style="padding:20px; text-align:center; color:var(--text-muted)">Belum ada data inspeksi.</div>
-      @else
-      <table class="table">
-        <thead><tr><th>No. Inspeksi</th><th>Kategori</th><th>Tgl Inspeksi</th></tr></thead>
-        <tbody>
-          @foreach($recentInspeksi as $i)
-          <tr>
-            <td><a href="{{ route('user.inspeksi.show',$i->id) }}">#{{ $i->id }}</a></td>
-            <td>{{ $i->kategori }}</td>
-            <td>{{ \Carbon\Carbon::parse($i->tanggal)->format('d/m/Y') }}</td>
-          </tr>
-          @endforeach
-        </tbody>
-      </table>
-      @endif
     </div>
   </div>
 </div>
 
-{{-- Officer Info --}}
+<div class="card">
+  <div class="card-header">
+    <span class="card-title">Inspeksi Terbaru</span>
+    <a href="{{ route('user.inspeksi.index') }}" class="btn btn-outline btn-sm">Lihat Semua</a>
+  </div>
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead><tr><th>Perusahaan</th><th>Tanggal</th><th>Kategori</th><th>Jenis</th><th>Berkas</th></tr></thead>
+      <tbody>
+        @forelse($recentInspeksi as $ins)
+        <tr>
+          <td>{{ $ins->nama_perusahaan }}</td>
+          <td>{{ $ins->tanggal?->format('d/m/Y') }}</td>
+          <td>{{ $ins->kategori }}</td>
+          <td>{{ $ins->jenis_sertifikat }}</td>
+          <td><span class="badge badge-{{ $ins->status_berkas === 'Terkirim' ? 'terkirim' : 'tidak-ada' }}">{{ $ins->status_berkas }}</span></td>
+        </tr>
+        @empty
+        <tr><td colspan="5" style="text-align:center; color:var(--text-muted)">Belum ada data</td></tr>
+        @endforelse
+      </tbody>
+    </table>
+  </div>
+</div>
+
 @if(auth()->user()->officer)
 <div class="card" style="margin-top:20px">
   <div class="card-header"><span class="card-title"><i class="fas fa-user-tie" style="color:var(--navy)"></i> Officer Penanggungjawab</span></div>

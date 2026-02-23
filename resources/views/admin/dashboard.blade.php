@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded',function(){
   </div>
   <div class="stat-card">
     <div class="stat-icon warning"><i class="fas fa-triangle-exclamation"></i></div>
-    <div><div class="stat-value">{{ $sertifikatWarning }}</div><div class="stat-label">Akan Kadaluwarsa</div></div>
+    <div><div class="stat-value">{{ $sertifikatWarning }}</div><div class="stat-label">Akan kadaluwarsa dalam ≤ 15 hari </div></div>
   </div>
   <div class="stat-card">
     <div class="stat-icon danger"><i class="fas fa-circle-xmark"></i></div>

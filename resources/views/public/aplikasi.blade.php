@@ -37,7 +37,7 @@
   <div class="container page-hero-content">
     <div class="page-badge"><i class="fas fa-grid-2"></i> Aplikasi Digital</div>
     <h1>Aplikasi Layanan Digital</h1>
-    <p>Kumpulan aplikasi layanan digital BPPMHKP Lampung — survey, pengaduan, informasi, dan layanan tamu</p>
+    <p>Kumpulan aplikasi layanan digital BALAI PPMHKP Lampung — survey, pengaduan, informasi, dan layanan tamu</p>
   </div>
 </div>
 
@@ -56,7 +56,7 @@
           <div class="app-card-icon"><i class="fas fa-poll"></i></div>
           <div>
             <div class="app-card-name">Survey Kepuasan Masyarakat</div>
-            <div class="app-card-desc">Formulir IKM online BPPMHKP Lampung — sampaikan penilaian Anda terhadap layanan kami</div>
+            <div class="app-card-desc">Formulir IKM online BALAI PPMHKP Lampung — sampaikan penilaian Anda terhadap layanan kami</div>
           </div>
           <div class="app-card-arrow"><i class="fas fa-external-link-alt"></i></div>
         </a>
@@ -128,7 +128,7 @@
         <a href="https://www.appsheet.com/start/a72f4794-790e-4927-aa4c-bde324630c6b" target="_blank" class="app-card">
           <div class="app-card-icon"><i class="fas fa-qrcode"></i></div>
           <div>
-            <div class="app-card-name">Smart Guest BPPMHKP</div>
+            <div class="app-card-name">Smart Guest BALAI PPMHKP</div>
             <div class="app-card-desc">Sistem pendaftaran tamu digital — daftarkan kunjungan Anda secara mandiri</div>
           </div>
           <div class="app-card-arrow"><i class="fas fa-external-link-alt"></i></div>

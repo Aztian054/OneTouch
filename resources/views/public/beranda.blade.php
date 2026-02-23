@@ -135,18 +135,28 @@
 {{-- PHOTO CAROUSEL --}}
 <div class="carousel-wrap" id="carousel">
   <div class="carousel-track" id="carouselTrack">
+    @php
+      $carouselNews = \App\Models\News::active()->latest()->take(4)->get();
+    @endphp
+    @forelse($carouselNews as $item)
+    <div class="carousel-slide" style="background-image:url('{{ $item->image ? asset($item->image) : '' }}'); @if(!$item->image) background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 100%); @endif">
+      <div class="slide-caption">
+        @if($item->image)
+        <i class="fas fa-image" style="color:var(--gold)"></i>
+        @else
+        <i class="fas fa-newspaper" style="color:var(--gold)"></i>
+        @endif
+        &nbsp;{{ $item->title }}
+      </div>
+    </div>
+    @empty
     <div class="carousel-slide" style="background-image:linear-gradient(135deg,#0f172a 0%,#1e3a5f 100%)">
       <div class="slide-caption"><i class="fas fa-certificate" style="color:var(--gold)"></i> &nbsp;Sertifikasi Mutu Hasil Perikanan Unggulan Lampung</div>
     </div>
     <div class="carousel-slide" style="background-image:linear-gradient(135deg,#1e3a5f 0%,#0f4c2a 100%)">
       <div class="slide-caption"><i class="fas fa-ship" style="color:var(--gold)"></i> &nbsp;Mendukung Ekspor Produk Perikanan Indonesia</div>
     </div>
-    <div class="carousel-slide" style="background-image:linear-gradient(135deg,#2d1b00 0%,#0f172a 100%)">
-      <div class="slide-caption"><i class="fas fa-shield-halved" style="color:var(--gold)"></i> &nbsp;Inspeksi & Pengawasan Mutu Berstandar Internasional</div>
-    </div>
-    <div class="carousel-slide" style="background-image:linear-gradient(135deg,#1a0f2e 0%,#0f172a 100%)">
-      <div class="slide-caption"><i class="fas fa-star-half-stroke" style="color:var(--gold)"></i> &nbsp;Survey Kepuasan Masyarakat — Komitmen Pelayanan Prima</div>
-    </div>
+    @endforelse
   </div>
   <button class="carousel-arrow carousel-prev" onclick="carouselMove(-1)"><i class="fas fa-chevron-left"></i></button>
   <button class="carousel-arrow carousel-next" onclick="carouselMove(1)"><i class="fas fa-chevron-right"></i></button>

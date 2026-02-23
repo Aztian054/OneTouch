@@ -30,8 +30,8 @@
 <div class="page-hero">
   <div class="container page-hero-content">
     <div class="page-badge"><i class="fas fa-scroll"></i> Regulasi & Kebijakan</div>
-    <h1>Regulasi BPPMHKP Lampung</h1>
-    <p>Dokumen regulasi, kebijakan, dan peraturan yang menjadi dasar layanan dan tata kelola BPPMHKP Lampung</p>
+    <h1>Regulasi BALAI PPMHKP  Lampung</h1>
+    <p>Dokumen regulasi, kebijakan, dan peraturan yang menjadi dasar layanan dan tata kelola BALAI PPMHKP  Lampung</p>
   </div>
 </div>
 
@@ -95,7 +95,7 @@
           <div class="reg-item-icon"><i class="fas fa-file-circle-info"></i></div>
           <div>
             <div class="reg-item-name">Informasi Publik PPID</div>
-            <div class="reg-item-desc">Dokumen dan informasi publik resmi BPPMHKP Lampung</div>
+            <div class="reg-item-desc">Dokumen dan informasi publik resmi BALAI PPMHKP  Lampung</div>
           </div>
           <div class="reg-item-arrow"><i class="fas fa-external-link-alt"></i></div>
         </a>
@@ -108,7 +108,7 @@
       <div>
         <div style="font-weight:600; color:var(--text); margin-bottom:4px">Butuh Dokumen Regulasi Lainnya?</div>
         <div style="font-size:13px; color:var(--text-muted); line-height:1.7">
-          Hubungi kami melalui WhatsApp <a href="https://api.whatsapp.com/send/?phone=%2B62816245342" target="_blank" style="color:var(--gold); font-weight:600">+62 816-245-342</a> atau kunjungi kantor Balai PPMHKP Lampung untuk memperoleh dokumen regulasi yang dibutuhkan.
+          Hubungi kami melalui WhatsApp <a href="https://api.whatsapp.com/send/?phone=%2B62816245342" target="_blank" style="color:var(--gold); font-weight:600">Whatsapp</a> atau kunjungi kantor Balai PPMHKP Lampung untuk memperoleh dokumen regulasi yang dibutuhkan.
         </div>
       </div>
     </div>

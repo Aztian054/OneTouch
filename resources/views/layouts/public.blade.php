@@ -271,7 +271,7 @@ body {
           <li><a href="#"><i class="fas fa-map-marker-alt" style="width:16px"></i> Bandar Lampung</a></li>
           <li><a href="#"><i class="fas fa-phone" style="width:16px"></i> (0721) 000-0000</a></li>
           <li><a href="#"><i class="fas fa-envelope" style="width:16px"></i> info@ppmhkp-lampung.kkp.go.id</a></li>
-          <li style="margin-top:12px"><a href="{{ route('login') }}" style="color:var(--gold)"><i class="fas fa-lock" style="width:16px"></i> Login Sistem Internal</a></li>
+          <li style="margin-top:12px"><a href="{{ route('login') }}" style="color:var(--gold)"><i class="fas fa-lock" style="width:16px"></i>OneTouch🔑</a></li>
         </ul>
       </div>
     </div>

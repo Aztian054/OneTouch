@@ -25,6 +25,17 @@ class DashboardController extends Controller
         $totalInspeksi     = Inspeksi::where($scopeFn)->count();
         $totalUsers        = User::where('officer_id', $officer->id)->count();
 
+        // Chart data: Sertifikat per Jenis
+        $sertifikatPerJenis = Sertifikat::where($scopeFn)
+            ->selectRaw('jenis_sertifikat, COUNT(*) as total')
+            ->groupBy('jenis_sertifikat')
+            ->get();
+
+        // Recent sertifikat
+        $recentSertifikat = Sertifikat::with('owner')
+            ->where($scopeFn)
+            ->latest()->limit(5)->get();
+
         $warningList = Sertifikat::with('owner')
             ->where($scopeFn)
             ->where('status_masa', 'warning')
@@ -37,7 +48,8 @@ class DashboardController extends Controller
 
         return view('officer.dashboard', compact(
             'totalSertifikat', 'sertifikatAktif', 'sertifikatWarning', 'sertifikatExpired',
-            'totalInspeksi', 'totalUsers', 'warningList', 'recentInspeksi'
+            'totalInspeksi', 'totalUsers', 'sertifikatPerJenis', 'recentSertifikat',
+            'warningList', 'recentInspeksi'
         ));
     }
 }

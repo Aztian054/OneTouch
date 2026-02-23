@@ -396,12 +396,34 @@ html.dark .alert-error   { background: rgba(239,68,68,.1);  border-color: rgba(2
     <a href="{{ route('admin.inspeksi.index') }}" class="nav-item {{ request()->routeIs('admin.inspeksi*') ? 'active' : '' }}">
       <i class="fas fa-clipboard-check"></i> Inspeksi
     </a>
-    <div class="nav-section-label">Administrasi</div>
+    <a href="{{ route('admin.laporan.index') }}" class="nav-item {{ request()->routeIs('admin.laporan*') ? 'active' : '' }}">
+      <i class="fas fa-file-chart-column"></i> Laporan Data
+    </a>
+    <div class="nav-section-label">Manajemen User</div>
     <a href="{{ route('admin.users.index') }}" class="nav-item {{ request()->routeIs('admin.users*') ? 'active' : '' }}">
       <i class="fas fa-users"></i> Manajemen User
     </a>
-    <a href="{{ route('admin.laporan.index') }}" class="nav-item {{ request()->routeIs('admin.laporan*') ? 'active' : '' }}">
-      <i class="fas fa-file-chart-column"></i> Laporan
+    <a href="{{ route('admin.laporan.users') }}" class="nav-item {{ request()->routeIs('admin.laporan.users*') ? 'active' : '' }}">
+      <i class="fas fa-file-pdf"></i> Laporan User
+    </a>
+    <div class="nav-section-label">Manajemen Publik</div>
+    <a href="{{ route('admin.skm.index') }}" class="nav-item {{ request()->routeIs('admin.skm*') ? 'active' : '' }}">
+      <i class="fas fa-star-half-stroke"></i> Survey Kepuasan Masyarakat
+    </a>
+    <a href="{{ route('admin.data-skm.index') }}" class="nav-item {{ request()->routeIs('admin.data-skm*') ? 'active' : '' }}">
+      <i class="fas fa-chart-bar"></i> Data SKM
+    </a>
+    <a href="{{ route('admin.news.index') }}" class="nav-item {{ request()->routeIs('admin.news*') ? 'active' : '' }}">
+      <i class="fas fa-newspaper"></i> Berita & Kegiatan
+    </a>
+    <a href="{{ route('admin.data-ekspor.index') }}" class="nav-item {{ request()->routeIs('admin.data-ekspor*') ? 'active' : '' }}">
+      <i class="fas fa-chart-line"></i> Data Ekspor
+    </a>
+    <a href="{{ route('admin.laporan.skm-surveys') }}" class="nav-item {{ request()->routeIs('admin.laporan.skm-surveys*') ? 'active' : '' }}">
+      <i class="fas fa-file-contract"></i> Laporan Survey Kepuasan Masyarakat
+    </a>
+    <a href="{{ route('admin.laporan.data-ekspor') }}" class="nav-item {{ request()->routeIs('admin.laporan.data-ekspor*') ? 'active' : '' }}">
+      <i class="fas fa-file-invoice-dollar"></i> Laporan Ekspor
     </a>
 
     {{-- OFFICER --}}
@@ -439,11 +461,6 @@ html.dark .alert-error   { background: rgba(239,68,68,.1);  border-color: rgba(2
       <i class="fas fa-file-chart-column"></i> Laporan
     </a>
     @endif
-
-    <div class="nav-section-label">Lainnya</div>
-    <a href="{{ route('beranda') }}" class="nav-item" target="_blank">
-      <i class="fas fa-globe"></i> Portal Publik
-    </a>
   </nav>
 
   <div class="sidebar-footer">

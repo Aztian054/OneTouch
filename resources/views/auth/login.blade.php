@@ -335,6 +335,53 @@ function togglePw(){
     icon.className = 'fas fa-eye';
   }
 }
+
+// Programmatic focus control - Username to Password
+document.getElementById('username').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    
+    const passwordField = document.getElementById('password');
+    const passwordGroup = passwordField.closest('.form-group');
+    
+    if (!passwordField.value.trim()) {
+      // Show client-side error
+      showPasswordError('Password wajib diisi');
+      // Move focus to password field
+      passwordField.focus();
+    } else {
+      // Password already filled, submit form
+      this.closest('form').submit();
+    }
+  }
+});
+
+// Clear password error when user starts typing
+document.getElementById('password').addEventListener('input', function() {
+  hidePasswordError();
+});
+
+function showPasswordError(msg) {
+  const passwordGroup = document.getElementById('password').closest('.form-group');
+  let errorDiv = passwordGroup.querySelector('.client-error');
+  
+  if (!errorDiv) {
+    errorDiv = document.createElement('div');
+    errorDiv.className = 'form-error client-error';
+    errorDiv.innerHTML = '<i class="fas fa-circle-xmark"></i> <span></span>';
+    passwordGroup.appendChild(errorDiv);
+  }
+  
+  errorDiv.querySelector('span').textContent = msg;
+  errorDiv.style.display = 'flex';
+}
+
+function hidePasswordError() {
+  const errorDiv = document.querySelector('.client-error');
+  if (errorDiv) {
+    errorDiv.style.display = 'none';
+  }
+}
 </script>
 </body>
 </html>

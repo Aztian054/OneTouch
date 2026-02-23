@@ -34,7 +34,7 @@ class Sertifikat extends Model
 
         if ($exp->lt($today)) {
             $this->status_masa = 'expired';
-        } elseif ($exp->lte($today->copy()->addDays(90))) {
+        } elseif ($exp->lte($today->copy()->addDays(15))) {
             $this->status_masa = 'warning';
         } else {
             $this->status_masa = 'aktif';
@@ -55,7 +55,7 @@ class Sertifikat extends Model
 
         if ($exp->lt($today)) {
             return 'expired';
-        } elseif ($exp->lte($today->copy()->addDays(90))) {
+        } elseif ($exp->lte($today->copy()->addDays(15))) {
             return 'warning';
         }
         return 'aktif';

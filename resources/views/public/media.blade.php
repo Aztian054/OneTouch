@@ -1,5 +1,7 @@
 @extends('layouts.public')
 @section('title', 'Media & Berita')
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 @push('styles')
 <style>
 .page-hero { background:var(--navy); padding:56px 0 48px; text-align:center; position:relative; overflow:hidden; }
@@ -40,7 +42,7 @@
   <div class="container page-hero-content">
     <div class="page-badge"><i class="fas fa-newspaper"></i> Media & Sosial</div>
     <h1>Media Sosial & Berita Kegiatan</h1>
-    <p>Ikuti perkembangan terkini kegiatan dan layanan BPPMHKP Lampung di media sosial</p>
+    <p>Ikuti perkembangan terkini kegiatan dan layanan BALAI PPMHKP Lampung di media sosial</p>
   </div>
 </div>
 
@@ -73,7 +75,7 @@
           <i class="fab fa-x-twitter"></i>
         </div>
         <div class="sosmed-name">X / Twitter</div>
-        <div class="sosmed-handle">@BPPMHKPLampung</div>
+        <div class="sosmed-handle">@BALAI PPMHKP Lampung</div>
       </a>
 
       <a href="https://api.whatsapp.com/send/?phone=%2B62816245342&text&type=phone_number&app_absent=0" target="_blank" class="sosmed-card">
@@ -81,7 +83,7 @@
           <i class="fab fa-whatsapp"></i>
         </div>
         <div class="sosmed-name">WhatsApp</div>
-        <div class="sosmed-handle">+62 816-245-342</div>
+        <div class="sosmed-handle">@BALAI PPMHKP lampung</div>
       </a>
 
       <a href="https://www.threads.com/@badanmutukkplampung?hl=en" target="_blank" class="sosmed-card">
@@ -89,7 +91,7 @@
           <i class="fab fa-threads"></i>
         </div>
         <div class="sosmed-name">Threads</div>
-        <div class="sosmed-handle">@badanmutukkplampung</div>
+        <div class="sosmed-handle">@BALAI PPMHKP lampung</div>
       </a>
 
       <a href="https://www.tiktok.com/@bppmhkplampung" target="_blank" class="sosmed-card">
@@ -97,38 +99,35 @@
           <i class="fab fa-tiktok"></i>
         </div>
         <div class="sosmed-name">TikTok</div>
-        <div class="sosmed-handle">@bppmhkplampung</div>
+        <div class="sosmed-handle">@BALAI PPMHKP lampung</div>
       </a>
 
     </div>
 
     {{-- NEWS / KEGIATAN --}}
     <div class="section-heading"><i class="fas fa-newspaper" style="color:var(--gold)"></i> Berita & Kegiatan</div>
-    <p class="section-sub">Informasi terbaru kegiatan inspeksi, sertifikasi, dan program BPPMHKP Lampung</p>
+    <p class="section-sub">Informasi terbaru kegiatan inspeksi, sertifikasi, dan program BALAI PPMHKP  Lampung</p>
 
     <div class="news-grid">
-      @for($i = 0; $i < 6; $i++)
       @php
-        $items = [
-          ['Sertifikasi','Penerbitan Sertifikat HACCP bagi Unit Pengolahan Ikan di Lampung','2024-11-20','linear-gradient(135deg,#0f172a,#1e3a5f)'],
-          ['Inspeksi','Kegiatan Inspeksi & Surveilan Produk Perikanan Ekspor Triwulan IV','2024-10-15','linear-gradient(135deg,#1e3a5f,#0f4c2a)'],
-          ['SKM','Pelaksanaan Survey Kepuasan Masyarakat Semester II Tahun 2024','2024-09-30','linear-gradient(135deg,#2d1b00,#0f172a)'],
-          ['Pelatihan','Sosialisasi Penerapan CBIB dan CPIB bagi Pembudidaya Ikan Lampung','2024-09-10','linear-gradient(135deg,#1a0f2e,#0f172a)'],
-          ['Ekspor','Realisasi Ekspor Produk Perikanan Lampung Meningkat 12% di 2024','2024-08-22','linear-gradient(135deg,#0f2e2e,#0f172a)'],
-          ['Koordinasi','Rapat Koordinasi BPPMHKP Lampung dengan Dinas Kelautan Provinsi','2024-08-05','linear-gradient(135deg,#2e1a00,#0f172a)'],
-        ][$i];
+        $newsItems = \App\Models\News::active()->ordered()->take(6)->get();
       @endphp
+      @forelse($newsItems as $item)
       <div class="news-card">
-        <div class="news-thumb" style="background-image:{{ $items[3] }}; display:flex; align-items:center; justify-content:center;">
-          <i class="fas fa-image" style="font-size:40px; color:rgba(212,175,55,.3)"></i>
+        <div class="news-thumb" style="background-image:url('{{ $item->image ? asset($item->image) : 'data:image/svg+xml,' . rawurlencode('<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><rect fill="%231e293b" width="100%" height="100%"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="%23d4af37" font-family="Arial" font-size="40">📰</text></svg>'); }}'); display:flex; align-items:center; justify-content:center;">
+          @if(!$item->image)
+          <i class="fas fa-newspaper" style="font-size:40px; color:rgba(212,175,55,.3)"></i>
+          @endif
         </div>
         <div class="news-body">
-          <div class="news-tag">{{ $items[0] }}</div>
-          <div class="news-title">{{ $items[1] }}</div>
-          <div class="news-date"><i class="fas fa-calendar-alt" style="color:var(--gold); margin-right:4px"></i>{{ \Carbon\Carbon::parse($items[2])->isoFormat('D MMMM Y') }}</div>
+          <div class="news-tag">{{ $item->event_date ? $item->event_date->format('d M Y') : 'Berita' }}</div>
+          <div class="news-title">{{ $item->title }}</div>
+          <div class="news-date"><i class="fas fa-calendar-alt" style="color:var(--gold); margin-right:4px"></i>{{ $item->event_date ? $item->event_date->isoFormat('D MMMM Y') : 'Belum ada tanggal' }}</div>
         </div>
       </div>
-      @endfor
+      @empty
+      <div style="grid-column: 1/-1; text-align:center; color:var(--text-muted); padding:40px;">Belum ada berita</div>
+      @endforelse
     </div>
 
   </div>

@@ -45,7 +45,7 @@
 <div class="page-hero">
   <div class="container page-hero-content">
     <div class="page-badge"><i class="fas fa-building-columns"></i> Profil Organisasi</div>
-    <h1>Tentang BPPMHKP Lampung</h1>
+    <h1>Tentang BALAI PPMHKP  Lampung</h1>
     <p>Balai Pengendalian dan Pengawasan Mutu dan Keamanan Hasil Kelautan dan Perikanan Lampung</p>
   </div>
 </div>
@@ -117,7 +117,7 @@
           <div class="org-placeholder">
             <i class="fas fa-sitemap" style="font-size:36px; color:rgba(212,175,55,.3); display:block; margin-bottom:10px"></i>
             <div style="font-weight:600; margin-bottom:4px">Bagan Struktur Organisasi</div>
-            <div style="font-size:12px">BPPMHKP Lampung — Kementerian Kelautan dan Perikanan RI</div>
+            <div style="font-size:12px">BALAI PPMHKP  Lampung — Kementerian Kelautan dan Perikanan RI</div>
           </div>
         </div>
 
