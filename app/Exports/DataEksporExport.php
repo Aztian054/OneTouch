@@ -30,8 +30,8 @@ class DataEksporExport implements FromCollection, WithHeadings, WithMapping, Wit
             $query->where('tahun', $this->filters['tahun']);
         }
 
-        if (!empty($this->filters['jenis_komoditas'])) {
-            $query->where('jenis_komoditas', $this->filters['jenis_komoditas']);
+        if (!empty($this->filters['komoditas'])) {
+            $query->where('komoditas', 'like', "%" . $this->filters['komoditas'] . "%");
         }
 
         if (!empty($this->filters['negara_tujuan'])) {
@@ -50,9 +50,10 @@ class DataEksporExport implements FromCollection, WithHeadings, WithMapping, Wit
             'Frekuensi Ekspor (Kali)',
             'Volume Ekspor (Ton)',
             'Nilai Ekspor (US$)',
-            'Jenis Komoditas',
+            'Komoditas',
             'Negara Tujuan',
-            'Keterangan',
+            'Unit Pelaksana',
+            'Eksportir',
             'Tanggal Dibuat',
         ];
     }
@@ -61,14 +62,15 @@ class DataEksporExport implements FromCollection, WithHeadings, WithMapping, Wit
     {
         return [
             $data->id,
-            $data->bulan,
+            $data->nama_bulan,
             $data->tahun,
-            number_format($data->frekuensi_ekspor, 0, ',', '.'),
-            number_format($data->volume_ekspor, 2, ',', '.'),
-            number_format($data->nilai_ekspor, 2, ',', '.'),
-            $data->jenis_komoditas,
-            $data->negara_tujuan,
-            $data->keterangan ?? '-',
+            number_format($data->frekuensi, 0, ',', '.'),
+            number_format($data->volume, 2, ',', '.'),
+            number_format($data->nilai, 2, ',', '.'),
+            $data->komoditas ?? '-',
+            $data->negara_tujuan ?? '-',
+            $data->unit_pelaksana ?? '-',
+            $data->eksportir ?? '-',
             $data->created_at ? $data->created_at->format('d/m/Y H:i') : '-',
         ];
     }

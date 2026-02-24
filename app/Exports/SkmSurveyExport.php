@@ -34,6 +34,9 @@ class SkmSurveyExport implements FromCollection, WithHeadings, WithMapping
             if (!empty($this->params['date_to']) && $this->params['date_to']) {
                 $query->whereDate('submitted_at', '<=', $this->params['date_to']);
             }
+            if (!empty($this->params['tahun']) && $this->params['tahun']) {
+                $query->whereYear('submitted_at', $this->params['tahun']);
+            }
         }
 
         return $query->orderBy('submitted_at', 'desc')->get();

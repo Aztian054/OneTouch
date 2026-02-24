@@ -123,15 +123,15 @@
     <div class="summary">
         <div class="summary-grid">
             <div class="summary-item">
-                <div class="summary-value">{{ number_format($dataEkspor->sum('frekuensi_ekspor'), 0, ',', '.') }}</div>
+                <div class="summary-value">{{ number_format($dataEkspor->sum('frekuensi'), 0, ',', '.') }}</div>
                 <div class="summary-label">Total Frekuensi (Kali)</div>
             </div>
             <div class="summary-item">
-                <div class="summary-value">{{ number_format($dataEkspor->sum('volume_ekspor'), 2, ',', '.') }}</div>
+                <div class="summary-value">{{ number_format($dataEkspor->sum('volume'), 2, ',', '.') }}</div>
                 <div class="summary-label">Total Volume (Ton)</div>
             </div>
             <div class="summary-item">
-                <div class="summary-value">$ {{ number_format($dataEkspor->sum('nilai_ekspor'), 2, ',', '.') }}</div>
+                <div class="summary-value">$ {{ number_format($dataEkspor->sum('nilai'), 2, ',', '.') }}</div>
                 <div class="summary-label">Total Nilai (US$)</div>
             </div>
         </div>
@@ -146,27 +146,29 @@
                 <th>Frekuensi</th>
                 <th>Volume (Ton)</th>
                 <th>Nilai (US$)</th>
-                <th>Jenis Komoditas</th>
+                <th>Komoditas</th>
                 <th>Negara Tujuan</th>
-                <th>Keterangan</th>
+                <th>Unit Pelaksana</th>
+                <th>Eksportir</th>
             </tr>
         </thead>
         <tbody>
             @forelse($dataEkspor as $i => $data)
             <tr>
                 <td>{{ $i + 1 }}</td>
-                <td>{{ $data->bulan }}</td>
+                <td>{{ $data->nama_bulan }}</td>
                 <td>{{ $data->tahun }}</td>
-                <td class="number">{{ number_format($data->frekuensi_ekspor, 0, ',', '.') }}</td>
-                <td class="number">{{ number_format($data->volume_ekspor, 2, ',', '.') }}</td>
-                <td class="number">$ {{ number_format($data->nilai_ekspor, 2, ',', '.') }}</td>
-                <td>{{ $data->jenis_komoditas }}</td>
-                <td>{{ $data->negara_tujuan }}</td>
-                <td>{{ $data->keterangan ?? '-' }}</td>
+                <td class="number">{{ number_format($data->frekuensi, 0, ',', '.') }}</td>
+                <td class="number">{{ number_format($data->volume, 2, ',', '.') }}</td>
+                <td class="number">$ {{ number_format($data->nilai, 2, ',', '.') }}</td>
+                <td>{{ $data->komoditas ?? '-' }}</td>
+                <td>{{ $data->negara_tujuan ?? '-' }}</td>
+                <td>{{ $data->unit_pelaksana ?? '-' }}</td>
+                <td>{{ $data->eksportir ?? '-' }}</td>
             </tr>
             @empty
             <tr>
-                <td colspan="9" style="text-align: center; padding: 30px; color: #64748b;">
+                <td colspan="10" style="text-align: center; padding: 30px; color: #64748b;">
                     Tidak ada data ekspor
                 </td>
             </tr>

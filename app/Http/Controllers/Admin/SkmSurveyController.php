@@ -100,7 +100,8 @@ class SkmSurveyController extends Controller
 
     public function exportExcel(Request $request)
     {
-        return Excel::download(new SkmSurveyExport($request), 'skm-surveys.xlsx');
+        $params = $request->only(['status', 'jenis_layanan', 'date_from', 'date_to', 'tahun']);
+        return Excel::download(new SkmSurveyExport($params), 'skm-surveys.xlsx');
     }
 
     public function exportPdf(Request $request)

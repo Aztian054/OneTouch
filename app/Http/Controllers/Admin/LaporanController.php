@@ -102,11 +102,8 @@ class LaporanController extends Controller
     {
         $query = SkmSurvey::query();
 
-        if ($request->filled('status_masa')) {
-            $query->where('status_masa', $request->status_masa);
-        }
-        if ($request->filled('status_proses')) {
-            $query->where('status_proses', $request->status_proses);
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
         }
         if ($request->filled('jenis_layanan')) {
             $query->where('jenis_layanan', $request->jenis_layanan);
@@ -123,7 +120,10 @@ class LaporanController extends Controller
 
         $surveys = $query->latest()->get();
 
-        $pdf = Pdf::loadView('pdf.skm-surveys', compact('surveys'))
+        // Calculate chart data
+        $chartData = $this->getSkmChartData($request);
+
+        $pdf = Pdf::loadView('pdf.skm-surveys', compact('surveys', 'chartData'))
             ->setPaper('a4', 'landscape');
 
         return $pdf->download('laporan-skm-surveys-' . now()->format('Ymd') . '.pdf');
@@ -147,8 +147,8 @@ class LaporanController extends Controller
         if ($request->filled('tahun')) {
             $query->where('tahun', $request->tahun);
         }
-        if ($request->filled('jenis_komoditas')) {
-            $query->where('jenis_komoditas', $request->jenis_komoditas);
+        if ($request->filled('komoditas')) {
+            $query->where('komoditas', 'like', "%" . $request->komoditas . "%");
         }
         if ($request->filled('negara_tujuan')) {
             $query->where('negara_tujuan', 'like', "%" . $request->negara_tujuan . "%");
@@ -183,5 +183,37 @@ class LaporanController extends Controller
         if ($request->filled('kategori')) $query->where('kategori', $request->kategori);
         if ($request->filled('jenis'))    $query->where('jenis_sertifikat', $request->jenis);
         if ($request->filled('tahun'))    $query->whereYear('tanggal', $request->tahun);
+    }
+
+    private function getSkmChartData(Request $request): array
+    {
+        $query = SkmSurvey::query();
+
+        // Apply same filters
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+        if ($request->filled('jenis_layanan')) {
+            $query->where('jenis_layanan', $request->jenis_layanan);
+        }
+        if ($request->filled('date_from')) {
+            $query->whereDate('submitted_at', '>=', $request->date_from);
+        }
+        if ($request->filled('date_to')) {
+            $query->whereDate('submitted_at', '<=', $request->date_to);
+        }
+        if ($request->filled('tahun')) {
+            $query->whereYear('submitted_at', $request->tahun);
+        }
+
+        return [
+            'q1_kualitas_pelayanan' => round($query->avg('q1_kualitas_pelayanan') ?? 0, 1),
+            'q2_kompetensi_petugas' => round($query->avg('q2_kompetensi_petugas') ?? 0, 1),
+            'q3_kecepatan' => round($query->avg('q3_kecepatan') ?? 0, 1),
+            'q4_kenyamanan' => round($query->avg('q4_kenyamanan') ?? 0, 1),
+            'q5_kenyamanan_sarpras' => round($query->avg('q5_kenyamanan_sarpras') ?? 0, 1),
+            'q6_fasilitas' => round($query->avg('q6_fasilitas') ?? 0, 1),
+            'q7_penampilan' => round($query->avg('q7_penampilan') ?? 0, 1),
+        ];
     }
 }

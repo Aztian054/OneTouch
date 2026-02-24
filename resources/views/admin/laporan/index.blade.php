@@ -130,21 +130,21 @@
     <div class="card-body">
       <form id="formSkmSurveys" method="GET">
         <div class="form-group">
-          <label class="form-label">Status Masa</label>
-          <select name="status_masa" class="form-select">
+          <label class="form-label">Status</label>
+          <select name="status" class="form-select">
             <option value="">Semua</option>
-            <option value="aktif">Aktif</option>
-            <option value="warning">Warning</option>
-            <option value="expired">Expired</option>
+            <option value="active">Active</option>
+            <option value="archived">Archived</option>
           </select>
         </div>
         <div class="form-group">
           <label class="form-label">Jenis Layanan</label>
           <select name="jenis_layanan" class="form-select">
             <option value="">Semua Jenis</option>
-            <option value="Sertifikasi">Sertifikasi</option>
-            <option value="Inspeksi">Inspeksi</option>
-            <option value="Surveilan">Surveilan</option>
+            <option value="Sertifikasi Karantina">Sertifikasi Karantina</option>
+            <option value="Sertifikasi Mutu">Sertifikasi Mutu</option>
+            <option value="Inspeksi Higiene">Inspeksi Higiene</option>
+            <option value="Lainnya">Lainnya</option>
           </select>
         </div>
         <div class="form-group">
@@ -172,18 +172,18 @@
           <label class="form-label">Bulan</label>
           <select name="bulan" class="form-select">
             <option value="">Semua Bulan</option>
-            <option value="Januari">Januari</option>
-            <option value="Februari">Februari</option>
-            <option value="Maret">Maret</option>
-            <option value="April">April</option>
-            <option value="Mei">Mei</option>
-            <option value="Juni">Juni</option>
-            <option value="Juli">Juli</option>
-            <option value="Agustus">Agustus</option>
-            <option value="September">September</option>
-            <option value="Oktober">Oktober</option>
-            <option value="November">November</option>
-            <option value="Desember">Desember</option>
+            <option value="1">Januari</option>
+            <option value="2">Februari</option>
+            <option value="3">Maret</option>
+            <option value="4">April</option>
+            <option value="5">Mei</option>
+            <option value="6">Juni</option>
+            <option value="7">Juli</option>
+            <option value="8">Agustus</option>
+            <option value="9">September</option>
+            <option value="10">Oktober</option>
+            <option value="11">November</option>
+            <option value="12">Desember</option>
           </select>
         </div>
         <div class="form-group">
