@@ -339,8 +339,23 @@ const colors = [
   '#7c3aed', '#db2777', '#ca8a04', '#0891b2', '#65a30d'
 ];
 
+// Bulan list untuk sorting kronologis
+const bulanList = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+// Function untuk sorting label kronologis
+function sortLabelsChronologically(labels) {
+  return labels.sort((a, b) => {
+    const [bulanA, tahunA] = a.split(' ');
+    const [bulanB, tahunB] = b.split(' ');
+    const dateA = new Date(parseInt(tahunA), bulanList.indexOf(bulanA));
+    const dateB = new Date(parseInt(tahunB), bulanList.indexOf(bulanB));
+    return dateA - dateB;
+  });
+}
+
 // Initialize all charts
 document.addEventListener('DOMContentLoaded', function() {
+  console.log('Data loaded:', eksporData.length, 'records');
   initLineChart();
   initBarChart();
   initHorizontalChart();
@@ -386,11 +401,16 @@ function updateSummary() {
 
 function initLineChart() {
   const ctx = document.getElementById('lineChart').getContext('2d');
-  const labels = [...new Set(filteredData.map(d => `${d.bulan_nama} ${d.tahun}`))].sort();
+  const labels = sortLabelsChronologically([...new Set(filteredData.map(d => `${d.bulan_nama} ${d.tahun}`))]);
   const values = labels.map(label => {
     const [bulan, tahun] = label.split(' ');
-    return filteredData.find(d => d.bulan_nama === bulan && d.tahun === parseInt(tahun))?.frekuensi || 0;
+    // Aggregate all records with same month/year
+    return filteredData
+      .filter(d => d.bulan_nama === bulan && d.tahun === parseInt(tahun))
+      .reduce((sum, d) => sum + (parseFloat(d.frekuensi) || 0), 0);
   });
+  console.log('LineChart labels:', labels);
+  console.log('LineChart values:', values);
 
   lineChart = new Chart(ctx, {
     type: 'line',
@@ -429,10 +449,13 @@ function initLineChart() {
 }
 
 function updateLineChart() {
-  const labels = [...new Set(filteredData.map(d => `${d.bulan_nama} ${d.tahun}`))].sort();
+  const labels = sortLabelsChronologically([...new Set(filteredData.map(d => `${d.bulan_nama} ${d.tahun}`))]);
   const values = labels.map(label => {
     const [bulan, tahun] = label.split(' ');
-    return filteredData.find(d => d.bulan_nama === bulan && d.tahun === parseInt(tahun))?.frekuensi || 0;
+    // Aggregate all records with same month/year
+    return filteredData
+      .filter(d => d.bulan_nama === bulan && d.tahun === parseInt(tahun))
+      .reduce((sum, d) => sum + (parseFloat(d.frekuensi) || 0), 0);
   });
 
   lineChart.data.labels = labels;
@@ -442,11 +465,16 @@ function updateLineChart() {
 
 function initBarChart() {
   const ctx = document.getElementById('barChart').getContext('2d');
-  const labels = [...new Set(filteredData.map(d => `${d.bulan_nama} ${d.tahun}`))].sort();
+  const labels = sortLabelsChronologically([...new Set(filteredData.map(d => `${d.bulan_nama} ${d.tahun}`))]);
   const values = labels.map(label => {
     const [bulan, tahun] = label.split(' ');
-    return filteredData.find(d => d.bulan_nama === bulan && d.tahun === parseInt(tahun))?.volume || 0;
+    // Aggregate all records with same month/year
+    return filteredData
+      .filter(d => d.bulan_nama === bulan && d.tahun === parseInt(tahun))
+      .reduce((sum, d) => sum + (parseFloat(d.volume) || 0), 0);
   });
+  console.log('BarChart labels:', labels);
+  console.log('BarChart values:', values);
 
   barChart = new Chart(ctx, {
     type: 'bar',
@@ -479,10 +507,13 @@ function initBarChart() {
 }
 
 function updateBarChart() {
-  const labels = [...new Set(filteredData.map(d => `${d.bulan_nama} ${d.tahun}`))].sort();
+  const labels = sortLabelsChronologically([...new Set(filteredData.map(d => `${d.bulan_nama} ${d.tahun}`))]);
   const values = labels.map(label => {
     const [bulan, tahun] = label.split(' ');
-    return filteredData.find(d => d.bulan_nama === bulan && d.tahun === parseInt(tahun))?.volume || 0;
+    // Aggregate all records with same month/year
+    return filteredData
+      .filter(d => d.bulan_nama === bulan && d.tahun === parseInt(tahun))
+      .reduce((sum, d) => sum + (parseFloat(d.volume) || 0), 0);
   });
 
   barChart.data.labels = labels;
@@ -499,12 +530,12 @@ function updateHorizontalChart() {
   const metric = document.getElementById('metricFilter').value;
   const limit = document.getElementById('limitFilter').value;
 
-  // Group and aggregate data
+  // Group and aggregate data - ensure parseFloat for numeric values
   const grouped = {};
   filteredData.forEach(item => {
     const key = item[category] || 'Lainnya';
     if (!grouped[key]) grouped[key] = 0;
-    grouped[key] += item[metric];
+    grouped[key] += parseFloat(item[metric]) || 0;
   });
 
   // Sort and limit
